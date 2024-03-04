@@ -1,0 +1,12 @@
+.footer {
+  margin-top: 16px;
+}
+
+.copyrights {
+  font-size: 14px;
+  line-height: 1.143;
+}
+
+.copyrights a {
+  text-decoration: underline;
+}

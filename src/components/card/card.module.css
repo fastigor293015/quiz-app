@@ -1,0 +1,46 @@
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 32px;
+  border-radius: 10px;
+  color: var(--primary-200);
+  background: var(--bg);
+}
+
+.img.topRight {
+  position: absolute;
+  top: -79px;
+  right: 0;
+  height: 146px;
+  width: 135px;
+}
+
+.img.topCenter {
+  width: 196px;
+  height: 196px;
+}
+
+.textContent {
+  width: 100%;
+}
+
+.textContent.center {
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 8px;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.222;
+}
+
+.description {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.143;
+  /* word-break: break-all; */
+}

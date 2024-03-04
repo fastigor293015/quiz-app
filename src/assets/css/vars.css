@@ -1,0 +1,14 @@
+:root {
+  --gradient: linear-gradient(45deg,
+      #125365 0% 39.55%,
+      #ff713f 39.55% 55%,
+      #ff9c46 55% 88.35%,
+      #ffca4a 88.35% 100%);
+  --primary-100: #81A1A9;
+  --primary-200: #125365;
+  --secondary-100: #EDD0B6;
+  --secondary-200: #FF9C46;
+  --bg: #F1F1EF;
+  --access: #2A8F55;
+  --error: #DF4C25;
+}

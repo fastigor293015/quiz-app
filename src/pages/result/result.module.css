@@ -1,0 +1,13 @@
+.title {
+  margin-bottom: 16px;
+}
+
+.rightAnswers {
+  color: var(--access);
+  font-weight: 700;
+}
+
+.wrongAnswers {
+  color: var(--error);
+  font-weight: 700;
+}

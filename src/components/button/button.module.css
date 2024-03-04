@@ -1,0 +1,43 @@
+.wrapper {
+  display: inline-block;
+  max-width: 270px;
+  text-align: center;
+}
+
+.wrapper.fullWidth {
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  padding: 22px;
+  border: 2px solid var(--secondary-200);
+  border-radius: 10px;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--bg);
+  text-align: center;
+  background: var(--secondary-200);
+  transition: color .2s ease-in-out, border-color .2s ease-in-out, background .2s ease-in-out;
+}
+
+.btn:disabled {
+  border-color: var(--secondary-100);
+  background: var(--secondary-100);
+}
+
+.tip {
+  margin-top: 8px;
+  font-size: 10px;
+  line-height: 1.2;
+  transition: color 0.3s ease-in-out;
+}
+
+.btn:disabled~.tip {
+  color: var(--primary-100);
+}
+
+.tip span {
+  font-weight: 700;
+}
