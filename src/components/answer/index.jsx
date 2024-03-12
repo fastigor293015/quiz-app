@@ -4,8 +4,9 @@ import styles from "./answer.module.css";
 const Answer = ({
   answers,
   selected,
-  isAnswered,
   rightAnswer,
+  isAnswered,
+  isLoading,
   onChange
 }) => {
   return (
@@ -19,7 +20,7 @@ const Answer = ({
             isActive={selected === item}
             success={isAnswered && (rightAnswer === item)}
             error={isAnswered && (rightAnswer !== selected) && (selected === item)}
-            disabled={isAnswered}
+            disabled={isAnswered || isLoading}
           />
         </li>
       ))}

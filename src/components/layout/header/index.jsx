@@ -1,16 +1,15 @@
+import useCurrentPage from "@/hooks/use-current-page";
+import useQuiz from "@/hooks/use-quiz";
 import Logo from "@/components/logo";
 import Error from "@/icons/error";
-import styles from "./header.module.css";
-import { useContext } from "react";
-import { CurrentPageContext } from "@/providers/current-page";
 import { pages } from "@/constants";
-import { QuizContext } from "@/providers/quiz";
+import styles from "./header.module.css";
 
 const Header = ({
   cancelBtn
 }) => {
-  const { navigate } = useContext(CurrentPageContext);
-  const { reset } = useContext(QuizContext);
+  const { navigate } = useCurrentPage();
+  const { reset } = useQuiz();
 
   return (
     <header className={styles.header}>

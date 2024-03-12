@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  height: 24px;
+}
+
+.container::before,
+.container::after,
+.dot {
+  content: '';
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: bouncing 1s infinite ease-in-out 0s;
+}
+
+.dot {
+  animation-delay: 0.2s;
+}
+
+.container::after {
+  animation-delay: 0.4s;
+}
+
+@keyframes bouncing {
+  0% {
+    transform: translateY(1px);
+  }
+
+  50% {
+    transform: translateY(-1px);
+  }
+
+  100% {
+    transform: translateY(1px);
+  }
+}

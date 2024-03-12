@@ -7,4 +7,10 @@
 
 .cancelBtn {
   color: inherit;
+  padding: 2px;
+}
+
+.cancelBtn svg {
+  width: 36px;
+  height: 36px;
 }

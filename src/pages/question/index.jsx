@@ -1,19 +1,23 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import useQuiz from "@/hooks/use-quiz";
+import useCurrentPage from "@/hooks/use-current-page";
 import Answer from "@/components/answer";
 import Card from "@/components/card";
 import Layout from "@/components/layout";
 import Button from "@/components/button";
-import { CurrentPageContext } from "@/providers/current-page";
-import { QuizContext } from "@/providers/quiz";
 import getAnswers from "@/utils/get-answers";
 import shuffle from "@/utils/shuffle";
 import { pages } from "@/constants";
 import data from "@/data/quizz_questions.json";
+import useHotKey from "@/hooks/use-hot-key";
 import styles from "./question.module.css";
 
 const Question = () => {
-  const { navigate } = useContext(CurrentPageContext);
-  const { questionsCount, updateAnswers } = useContext(QuizContext);
+  const { navigate } = useCurrentPage();
+  const { hint } = useHotKey("Enter", () => onSubmit());
+  useHotKey("Backspace", () => onSelect(null));
+  const { questionsCount, updateAnswers } = useQuiz();
+  const [isLoading, setIsLoading] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [selected, setSelected] = useState(null);
   const [number, setNumber] = useState(0);
@@ -27,26 +31,48 @@ const Question = () => {
   const btnText = useMemo(() => !isAnswered ? "Ответить" : isLastQuestion ? "Результат" : "Дальше", [isAnswered, isLastQuestion]);
 
   useEffect(() => {
+    const onKeyDown = (e) => {
+      const number = parseInt(e.key);
+      if (number >= 1 && number <= answers.length) {
+        onSelect(answers[number - 1]);
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isAnswered, answers, isLoading]);
+
+  useEffect(() => {
     console.log(countries);
   }, [countries]);
 
   const onSelect = (value) => {
+    if (isAnswered || isLoading) return;
     setSelected(value);
   }
 
   const onSubmit = () => {
-    if (isAnswered) {
-      updateAnswers(selected === rightAnswer);
-      setCountries(prev => prev.filter(item => item !== rightAnswer));
-      if (isLastQuestion) {
-        navigate(pages.result);
-      } else {
-        setNumber(prev => prev + 1);
-        setSelected(null);
-      }
+    if (disabled) {
+      return;
     }
-    setIsAnswered(prev => !prev);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      if (isAnswered) {
+        updateAnswers(selected === rightAnswer);
+        setCountries(prev => prev.filter(item => item !== rightAnswer));
+        if (isLastQuestion) {
+          navigate(pages.result);
+        } else {
+          setNumber(prev => prev + 1);
+          setSelected(null);
+        }
+      }
+      setIsAnswered(prev => !prev);
+    }, 1500);
   }
+
+  const disabled = useMemo(() => !selected || isLoading, [selected, isLoading]);
 
   return (
     <Layout cancelBtn>
@@ -58,14 +84,16 @@ const Question = () => {
         <Answer
           answers={answers}
           selected={selected}
-          isAnswered={isAnswered}
           rightAnswer={rightAnswer}
+          isAnswered={isAnswered}
+          isLoading={isLoading}
           onChange={onSelect}
         />
         <div className={styles.bottom}>
           <Button
-            tip="Enter ↵"
-            disabled={!selected}
+            hint={hint}
+            disabled={disabled}
+            loading={isLoading}
             fullWidth
             onClick={onSubmit}
           >

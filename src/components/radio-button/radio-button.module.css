@@ -10,6 +10,7 @@
   line-height: 1.2;
   font-weight: 700;
   color: inherit;
+  text-align: left;
   transition-property: border-color, color, background;
   transition-duration: .2s;
   transition-timing-function: ease-in-out;
@@ -35,5 +36,21 @@
 }
 
 .radioBtn span {
+  flex: 1 1 100%;
+  /* display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px; */
   font-weight: 500;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.radioBtn svg {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
 }

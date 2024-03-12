@@ -1,8 +1,10 @@
 import clsx from "@/utils/clsx";
 import styles from "./button.module.css";
+import Loader from "../loader";
 
 const Button = ({
-  tip,
+  hint,
+  loading,
   fullWidth,
   children,
   onClick,
@@ -11,12 +13,12 @@ const Button = ({
   return (
     <div className={clsx(styles.wrapper, fullWidth && styles.fullWidth)}>
       <button className={styles.btn} onClick={onClick} disabled={disabled}>
-        {children}
+        {loading ? <Loader /> : children}
       </button>
       {
-        tip && (
-          <p className={styles.tip}>
-            или нажми <span>{tip}</span>
+        hint && (
+          <p className={styles.hint}>
+            или нажми <span>{hint}</span>
           </p>
         )
       }

@@ -1,18 +1,21 @@
-import { useContext, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import useCurrentPage from "@/hooks/use-current-page";
+import useQuiz from "@/hooks/use-quiz";
+import useHotKey from "@/hooks/use-hot-key";
 import Button from "@/components/button";
 import Counter from "@/components/counter";
 import Layout from "@/components/layout";
 import Card from "@/components/card";
-import { CurrentPageContext } from "@/providers/current-page";
 import data from "@/data/quizz_questions.json";
 import { pages } from "@/constants";
-import { QuizContext } from "@/providers/quiz";
 // import styles from "./welcome.module.css";
 
 const Welcome = () => {
-  const { navigate } = useContext(CurrentPageContext);
-  const { questionsCount: initialQuestionsCount, setQuestionsCount: setCount } = useContext(QuizContext);
+  const { navigate } = useCurrentPage();
+  const { questionsCount: initialQuestionsCount, setQuestionsCount: setCount } = useQuiz();
   const [questionsCount, setQuestionsCount] = useState(initialQuestionsCount);
+  const [isLoading, setIsLoading] = useState(false);
+  const { hint } = useHotKey("Enter", () => onSubmit());
   const min = 1;
   const max = data.questions.length;
 
@@ -21,11 +24,19 @@ const Welcome = () => {
   }
 
   const onSubmit = () => {
-    navigate(pages.question);
-    setCount(questionsCount);
+    if (disabled) {
+      return;
+    }
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate(pages.question);
+      setCount(questionsCount);
+    }, 1500);
   }
 
   const isInvalid = useMemo(() => questionsCount < min || questionsCount > max, [questionsCount, min, max]);
+  const disabled = useMemo(() => isInvalid || isLoading, [isInvalid, isLoading]);
 
   return (
     <Layout>
@@ -42,9 +53,10 @@ const Welcome = () => {
           description="Выбери количество вопросов:"
         />
         <Button
-          tip="Enter ↵"
+          hint={hint}
           fullWidth
-          disabled={isInvalid}
+          loading={isLoading}
+          disabled={disabled}
           onClick={onSubmit}
         >
           Начать

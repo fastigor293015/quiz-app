@@ -1,3 +1,5 @@
+import Success from "@/icons/success";
+import Error from "@/icons/error";
 import clsx from "@/utils/clsx";
 import styles from "./radio-button.module.css";
 
@@ -16,6 +18,8 @@ const RadioButton = ({
       <span>
         {value}
       </span>
+      {success && <Success />}
+      {error && <Error />}
     </button>
   );
 }

@@ -27,17 +27,17 @@
   background: var(--secondary-100);
 }
 
-.tip {
+.hint {
   margin-top: 8px;
   font-size: 10px;
   line-height: 1.2;
   transition: color 0.3s ease-in-out;
 }
 
-.btn:disabled~.tip {
+.btn:disabled~.hint {
   color: var(--primary-100);
 }
 
-.tip span {
+.hint span {
   font-weight: 700;
 }
